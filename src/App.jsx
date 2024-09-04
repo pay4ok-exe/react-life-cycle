@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Kairosh from './Kairosh'
-
+import newSong from './assets/myUniverse.mp3'
 class App extends React.Component {
 
   // constructor(){
@@ -26,41 +26,51 @@ class App extends React.Component {
   // }
 
   state = {
-    // count: 0,
-    // isLoading: false,
-    isVisible: false
+    count: 0,
+    isLoading: false,
+    isVisible: false,
+    song: new Audio(newSong)
   }
+
+  start = () =>{
+    setInterval(()=>{
+      // wait
+            this.setState({
+              isVisible: !this.state.isVisible
+            })
+          }, 3000)
+
+  } 
 
   componentDidMount(){
-    setInterval(()=>{
-// wait
-      this.setState({
-        isVisible: !this.state.isVisible
-      })
-    }, 3000)
+    this.setState({
+      isLoading: true
+    })
+
+    
+    
   }
 
-  // componentDidMount(){
-  //   this.setState({
-  //     isLoading: true
-  //   })
+  componentDidUpdate(){
+    this.state.isVisible && this.state.song.play()
 
-  //   setTimeout(()=>{
-  //       this.setState({count: 5, isLoading: false})
-  //   }, 5000);
-  // }
+  }
 
 
   render() {
     return (
-      <>
-        {/* <h1>Task 1</h1>
-        {this.state.isLoading ? <>...Lodaing</> : <>{this.state.count}</>} */}
+      <div>
+        <h1>Task 1</h1>
+        {this.state.isLoading ? <>...Lodaing</> : <>{this.state.count}</>}
 
         <h1>Task 2</h1>
-        {this.state.isVisible && <Kairosh/>}
+        <button onClick={this.start}> Start</button>
+        {this.state.isVisible && <Kairosh song={this.state.song}/>}
         {/* <Kairosh/> */}
-      </>
+
+        <h1>Task 3</h1>
+        {/* {} */}
+        </div>
     );
   }
 }
